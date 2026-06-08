@@ -1,7 +1,6 @@
 package com.casamovimiento.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity

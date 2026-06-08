@@ -26,13 +26,11 @@ public class AlumnoController {
         this.repo=repo;
     }
 
+
     @GetMapping
-
-    public List<Alumno>
-    listar(){
-        return repo.findAll();
+    public List<Alumno> listar() {
+        return repo.findAllByOrderByApellidoAsc();
     }
-
 
     @PostMapping
     public Alumno crearAlumno(
@@ -41,5 +39,28 @@ public class AlumnoController {
 
         return repo.save(alumno);
 
+    }
+
+    @PutMapping("/{id}")
+    public Alumno actualizarAlumno(
+            @PathVariable Long id,
+            @RequestBody Alumno alumnoActualizado
+    ) {
+
+        Alumno alumno = repo.findById(id).orElseThrow();
+
+        alumno.setNombre(alumnoActualizado.getNombre());
+        alumno.setApellido(alumnoActualizado.getApellido());
+        alumno.setFechaNacimiento(alumnoActualizado.getFechaNacimiento());
+        alumno.setDni(alumnoActualizado.getDni());
+        alumno.setTelefono(alumnoActualizado.getTelefono());
+        alumno.setEmail(alumnoActualizado.getEmail());
+        alumno.setFechaIngreso(alumnoActualizado.getFechaIngreso());
+        alumno.setDisciplina(alumnoActualizado.getDisciplina());
+        alumno.setGrupo(alumnoActualizado.getGrupo());
+        alumno.setNivel(alumnoActualizado.getNivel());
+        alumno.setEstado(alumnoActualizado.getEstado());
+
+        return repo.save(alumno);
     }
 }
