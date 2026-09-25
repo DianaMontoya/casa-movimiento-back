@@ -5,6 +5,7 @@ import com.casamovimiento.repository.PagoRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.time.LocalDate;
 
 @CrossOrigin(
         origins = "http://localhost:5173"
@@ -92,7 +93,43 @@ public class PagoController {
 
     }
 
+    @GetMapping("/balance")
 
+    public List<Pago> balance(
+
+            @RequestParam LocalDate desde,
+
+            @RequestParam LocalDate hasta,
+
+            @RequestParam(
+                    required = false
+            )
+            String metodo
+
+    ) {
+
+        if (
+
+                metodo == null ||
+
+                        metodo.isBlank()
+
+        ) {
+
+            return repo.findByFechaPagoBetween(
+                    desde,
+                    hasta
+            );
+
+        }
+
+        return repo.findByFechaPagoBetweenAndMetodoPago(
+                desde,
+                hasta,
+                metodo
+        );
+
+    }
 
 
 }
